@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Convertidor a PDF</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main>
+        <h1>Convertidor a PDF</h1>
+        <div class="layout">
+            <div class="left-panel">
+                <div class="controls">
+                    <label class="filelabel">Seleccionar archivo
+                        <input id="fileInput" type="file" accept=".docx,.pptx,.xlsx">
+                    </label>
+                    <button id="Descargarbtn" disabled>Descargar PDF</button>
+                    <button id="Limpiarbtn">Limpiar</button>
+                </div>
+                <div class="info">
+                    <p id="filename">Ningún archivo seleccionado</p>
+                </div>
+            </div>
+            <div class="right-panel">
+                <section class="preview-section">
+                    <h2>Vista previa</h2>
+                    <iframe id="pdfPreview" class="preview" style="display:none;"></iframe>
+                </section>
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>
