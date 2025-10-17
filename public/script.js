@@ -1,57 +1,46 @@
-const fileInput = document.getElementById('fileInput')
-const pdfPreview = document.getElementById('pdfPreview')
-const filenameEl = document.getElementById('filename')
-const Descargarbtn = document.getElementById('Descargarbtn')
-const Limpiarbtn = document.getElementById('Limpiarbtn')
-let currentPdfUrl = ''
+const fileInput = document.getElementById('fileInput');
+const descargarBtn = document.getElementById('Descargarbtn');
+const limpiarBtn = document.getElementById('Limpiarbtn');
+const filenameEl = document.getElementById('filename');
+const pdfPreview = document.getElementById('pdfPreview');
 
-fileInput.addEventListener('change', async () => {
-    const file = fileInput.files[0]
-    if (!file) return
-    const ext = file.name.split('.').pop().toLowerCase()
-    if (!["docx", "pptx", "xlsx"].includes(ext)) {
-        alert("Solo archivos Word, PowerPoint o Excel")
-        fileInput.value = ''
-        return
+fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (!file) {
+        descargarBtn.disabled = true;
+        filenameEl.textContent = 'Ningún archivo seleccionado';
+        pdfPreview.style.display = 'none';
+        pdfPreview.src = '';
+        return;
     }
-    filenameEl.textContent = file.name
-    Descargarbtn.disabled = true
-    pdfPreview.style.display = 'none'
-    pdfPreview.src = ''
+    filenameEl.textContent = file.name;
+    descargarBtn.disabled = false;
+});
 
-    const formData = new FormData()
-    formData.append('file', file)
-    try {
-        const res = await fetch('/convert', { method: 'POST', body: formData })
-        if (!res.ok) {
-            const txt = await res.text()
-            return alert('Error: ' + txt)
-        }
-        const data = await res.json()
-        currentPdfUrl = data.url
-        pdfPreview.src = currentPdfUrl
-        pdfPreview.style.display = 'block'
-        Descargarbtn.disabled = false
-    } catch {
-        alert('Error al generar PDF')
-    }
-})
+descargarBtn.addEventListener('click', async () => {
+    if (!fileInput.files[0]) return;
 
-Descargarbtn.addEventListener('click', () => {
-    if (!currentPdfUrl) return
-    const a = document.createElement('a')
-    a.href = currentPdfUrl
-    a.download = filenameEl.textContent.replace(/\.(docx|pptx|xlsx)$/i, '.pdf')
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
-})
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
 
-Limpiarbtn.addEventListener('click', () => {
-    fileInput.value = ''
-    filenameEl.textContent = 'Ningún archivo seleccionado'
-    pdfPreview.src = ''
-    pdfPreview.style.display = 'none'
-    Descargarbtn.disabled = true
-    currentPdfUrl = ''
-})
+    const res = await fetch('/api/convert', { method: 'POST', body: formData });
+    if (!res.ok) return alert('Error al convertir el archivo');
+
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    pdfPreview.src = url;
+    pdfPreview.style.display = 'block';
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileInput.files[0].name.replace(/\.\w+$/, '.pdf');
+    link.click();
+});
+
+limpiarBtn.addEventListener('click', () => {
+    fileInput.value = '';
+    filenameEl.textContent = 'Ningún archivo seleccionado';
+    pdfPreview.src = '';
+    pdfPreview.style.display = 'none';
+    descargarBtn.disabled = true;
+});
