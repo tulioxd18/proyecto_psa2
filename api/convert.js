@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
 
         const defaultClient = CloudmersiveConvertApiClient.ApiClient.instance;
         const Apikey = defaultClient.authentications['Apikey'];
-        Apikey.apiKey = "TU_API_KEY_AQUI";
+        Apikey.apiKey = "8f9c56d4-8d02-42af-a7b2-a5be14b334c3";
 
         const api = new CloudmersiveConvertApiClient.ConvertDocumentApi();
         const inputFile = fs.readFileSync(files.file.filepath);
