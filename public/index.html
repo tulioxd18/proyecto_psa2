@@ -1,15 +1,11 @@
 <!doctype html>
 <html lang="es">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Convertidor a PDF</title>
-    <link rel="stylesheet" href="/styles.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6470490676883813"
-        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/public/styles.css">
 </head>
-
 <body>
     <main>
         <h1>Convertidor a PDF</h1>
@@ -17,21 +13,14 @@
             <div class="left-panel">
                 <div class="controls">
                     <label class="filelabel">Seleccionar archivo
-                        <input id="fileInput" type="file" accept=".doc,.docx,.ppt,.pptx,.xls,.xlsx">
+                        <input id="fileInput" type="file" accept=".docx,.pptx,.xlsx">
                     </label>
                     <button id="Descargarbtn" disabled>Descargar PDF</button>
                     <button id="Limpiarbtn">Limpiar</button>
                 </div>
                 <div class="info">
                     <p id="filename">Ningún archivo seleccionado</p>
-                    <p id="message" class="message"></p> <!-- ← agregado para mostrar mensajes -->
-                </div>
-                <div class="donate-section">
-                    <h3>Apóyanos</h3>
-                    <form action="https://www.paypal.com/donate" method="post" target="_blank" class="paypal-form">
-                        <input type="hidden" name="hosted_button_id" value="TU_BUTTON_ID">
-                        <button type="submit" class="paypal-btn">Donar con PayPal</button>
-                    </form>
+                    <p id="message"></p>
                 </div>
             </div>
             <div class="right-panel">
@@ -42,7 +31,6 @@
             </div>
         </div>
     </main>
-    <script src="/script.js"></script>
+    <script src="/public/script.js"></script>
 </body>
-
 </html>
