@@ -5,7 +5,7 @@ const path = require("path")
 const FormData = require("form-data")
 const fetch = require("node-fetch")
 
-const CLOUDMERSIVE_API_KEY = "8f9c56d4-8d02-42af-a7b2-a5be14b334c3"
+const CLOUDMERSIVE_API_KEY = process.env.CLOUDMERSIVE_API_KEY;
 
 const app = express()
 app.use(express.static("public"))
