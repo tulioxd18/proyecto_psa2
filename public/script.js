@@ -2,19 +2,12 @@ const fileInput = document.getElementById('fileInput')
 const descargarBtn = document.getElementById('Descargarbtn')
 const limpiarBtn = document.getElementById('Limpiarbtn')
 const filenameEl = document.getElementById('filename')
-const pdfPreview = document.getElementById('pdfPreview')
 const messageEl = document.getElementById('message')
+const pdfPreview = document.getElementById('pdfPreview')
 
 let pdfUrl = ''
 let createdObjectUrl = null
-
 const allowedExt = ['.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx']
-
-function getFilenameFromDisposition(disposition) {
-    if (!disposition) return ''
-    const match = disposition.match(/filename\*?=(?:UTF-8'')?["']?([^;"']+)["']?/)
-    return match ? decodeURIComponent(match[1]) : ''
-}
 
 fileInput.addEventListener('change', async () => {
     messageEl.textContent = ''
@@ -32,7 +25,7 @@ fileInput.addEventListener('change', async () => {
 
     const ext = '.' + file.name.split('.').pop().toLowerCase()
     if (!allowedExt.includes(ext)) {
-        messageEl.textContent = `Formato no permitido. Suba Word (.doc o .docx), PowerPoint (.ppt o .pptx) o Excel (.xls o .xlsx).`
+        messageEl.textContent = `Formato no permitido. Suba Word (.doc/.docx), PowerPoint (.ppt/.pptx) o Excel (.xls/.xlsx).`
         fileInput.value = ''
         return
     }
@@ -59,9 +52,6 @@ fileInput.addEventListener('change', async () => {
         const blob = await res.blob()
         createdObjectUrl = URL.createObjectURL(blob)
         pdfUrl = createdObjectUrl
-        const dispo = res.headers.get('content-disposition') || ''
-        const name = getFilenameFromDisposition(dispo) || file.name.replace(/\.[^/.]+$/, '') + '.pdf'
-        descargarBtn.dataset.filename = name
         pdfPreview.src = pdfUrl
         pdfPreview.style.display = 'block'
         descargarBtn.disabled = false
@@ -81,8 +71,7 @@ descargarBtn.addEventListener('click', () => {
     if (!pdfUrl) return alert('No hay PDF para descargar')
     const link = document.createElement('a')
     link.href = pdfUrl
-    const name = descargarBtn.dataset.filename || ''
-    if (name) link.download = name
+    link.download = fileInput.files[0].name.replace(/\.[^/.]+$/, '') + '.pdf'
     document.body.appendChild(link)
     link.click()
     link.remove()
@@ -94,8 +83,8 @@ limpiarBtn.addEventListener('click', () => {
     pdfPreview.src = ''
     pdfPreview.style.display = 'none'
     descargarBtn.disabled = true
-    pdfUrl = ''
     messageEl.textContent = ''
+    pdfUrl = ''
     if (createdObjectUrl) URL.revokeObjectURL(createdObjectUrl)
     createdObjectUrl = null
 })
