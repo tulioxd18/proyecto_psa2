@@ -3,9 +3,12 @@ const descargarBtn = document.getElementById('Descargarbtn')
 const limpiarBtn = document.getElementById('Limpiarbtn')
 const filenameEl = document.getElementById('filename')
 const pdfPreview = document.getElementById('pdfPreview')
+const messageEl = document.getElementById('message')  // nuevo párrafo para mensajes al usuario
 
 let pdfUrl = ''
 let createdObjectUrl = null
+
+const allowedExt = ['.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx']
 
 function getFilenameFromDisposition(disposition) {
     if (!disposition) return ''
@@ -14,6 +17,7 @@ function getFilenameFromDisposition(disposition) {
 }
 
 fileInput.addEventListener('change', async () => {
+    messageEl.textContent = ''
     const file = fileInput.files[0]
     if (!file) {
         descargarBtn.disabled = true
@@ -25,6 +29,14 @@ fileInput.addEventListener('change', async () => {
         createdObjectUrl = null
         return
     }
+
+    const ext = '.' + file.name.split('.').pop().toLowerCase()
+    if (!allowedExt.includes(ext)) {
+        messageEl.textContent = `Formato no permitido. Suba Word (.doc o .docx), PowerPoint (.ppt o .pptx) o Excel (.xls o .xlsx).`
+        fileInput.value = ''
+        return
+    }
+
     filenameEl.textContent = file.name
     descargarBtn.disabled = true
     pdfPreview.style.display = 'none'
@@ -35,11 +47,12 @@ fileInput.addEventListener('change', async () => {
 
     const formData = new FormData()
     formData.append('file', file)
+
     try {
         const res = await fetch('/api/convert', { method: 'POST', body: formData })
         if (!res.ok) {
             const txt = await res.text()
-            alert(txt || 'Error al convertir el archivo')
+            messageEl.textContent = txt || 'Error al convertir el archivo'
             return
         }
 
@@ -52,8 +65,9 @@ fileInput.addEventListener('change', async () => {
         pdfPreview.src = pdfUrl
         pdfPreview.style.display = 'block'
         descargarBtn.disabled = false
+        messageEl.textContent = 'Archivo convertido correctamente. Puede previsualizarlo o descargarlo.'
     } catch (e) {
-        alert('Error al convertir el archivo')
+        messageEl.textContent = 'Error al convertir el archivo. Intente de nuevo.'
         if (createdObjectUrl) URL.revokeObjectURL(createdObjectUrl)
         createdObjectUrl = null
         pdfUrl = ''
@@ -81,6 +95,7 @@ limpiarBtn.addEventListener('click', () => {
     pdfPreview.style.display = 'none'
     descargarBtn.disabled = true
     pdfUrl = ''
+    messageEl.textContent = ''
     if (createdObjectUrl) URL.revokeObjectURL(createdObjectUrl)
     createdObjectUrl = null
 })
