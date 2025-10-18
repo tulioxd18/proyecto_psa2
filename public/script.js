@@ -3,7 +3,7 @@ const descargarBtn = document.getElementById('Descargarbtn')
 const limpiarBtn = document.getElementById('Limpiarbtn')
 const filenameEl = document.getElementById('filename')
 const pdfPreview = document.getElementById('pdfPreview')
-const messageEl = document.getElementById('message')  // nuevo párrafo para mensajes al usuario
+const messageEl = document.getElementById('message')
 
 let pdfUrl = ''
 let createdObjectUrl = null

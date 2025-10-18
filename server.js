@@ -10,14 +10,16 @@ const app = express()
 app.use(express.static("public"))
 app.use(fileUpload({ limits: { fileSize: 50 * 1024 * 1024 } }))
 
-const allowedExt = [".docx", ".pptx", ".xlsx"]
+const allowedExt = [".doc", ".docx", ".ppt", ".pptx", ".xls", ".xlsx"]
 
 app.post("/api/convert", async (req, res) => {
     if (!CLOUDMERSIVE_API_KEY) return res.status(500).send("Falta CLOUDMERSIVE_API_KEY")
-    if (!req.files || !req.files.file) return res.status(400).send("No file")
+    if (!req.files || !req.files.file) return res.status(400).send("No se recibió ningún archivo")
+
     const file = req.files.file
     const ext = path.extname(file.name).toLowerCase()
-    if (!allowedExt.includes(ext)) return res.status(400).send("Solo se permiten archivos Word, PowerPoint o Excel")
+    if (!allowedExt.includes(ext)) 
+        return res.status(400).send("Formato no permitido. Suba Word (.doc/.docx), PowerPoint (.ppt/.pptx) o Excel (.xls/.xlsx)")
 
     try {
         const form = new FormData()
@@ -25,8 +27,9 @@ app.post("/api/convert", async (req, res) => {
         const headers = Object.assign({ Apikey: CLOUDMERSIVE_API_KEY }, form.getHeaders())
 
         let url = "https://api.cloudmersive.com/convert/docx/to/pdf"
-        if (ext === ".pptx") url = "https://api.cloudmersive.com/convert/pptx/to/pdf"
-        if (ext === ".xlsx") url = "https://api.cloudmersive.com/convert/xlsx/to/pdf"
+        if (ext === ".doc" || ext === ".docx") url = "https://api.cloudmersive.com/convert/docx/to/pdf"
+        if (ext === ".ppt" || ext === ".pptx") url = "https://api.cloudmersive.com/convert/pptx/to/pdf"
+        if (ext === ".xls" || ext === ".xlsx") url = "https://api.cloudmersive.com/convert/xlsx/to/pdf"
 
         const resp = await fetch(url, { method: "POST", headers, body: form })
         if (!resp.ok) {
@@ -41,7 +44,7 @@ app.post("/api/convert", async (req, res) => {
         res.setHeader("Content-Disposition", `attachment; filename*=UTF-8''${encodeURIComponent(pdfName)}`)
         resp.body.pipe(res)
     } catch (err) {
-        res.status(500).send("Error interno")
+        res.status(500).send("Error interno al convertir el archivo")
     }
 })
 
