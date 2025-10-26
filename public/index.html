@@ -40,21 +40,17 @@
                     <p id="message" role="status"></p>
                 </div>
 
-                <div id="paypal-container-F362U3ZJV49HC" aria-hidden="false"></div>
-                <script>
-                    paypal.HostedButtons({
-                        hostedButtonId: "F362U3ZJV49HC"
-                    }).render("#paypal-container-F362U3ZJV49HC")
-                </script>
-            </div>
+                <div id="paypal-container-F362U3ZJV49HC"></div>
+                <script> paypal.HostedButtons({ hostedButtonId: "F362U3ZJV49HC", }).render("#paypal-container-F362U3ZJV49HC") </script>
 
-            <div class="right-panel">
-                <section class="preview-section" aria-label="Vista previa del PDF">
-                    <h2>Vista previa</h2>
-                    <iframe id="pdfPreview" class="preview" style="display:none;" title="Vista previa de PDF"></iframe>
-                </section>
+                <div class="right-panel">
+                    <section class="preview-section" aria-label="Vista previa del PDF">
+                        <h2>Vista previa</h2>
+                        <iframe id="pdfPreview" class="preview" style="display:none;"
+                            title="Vista previa de PDF"></iframe>
+                    </section>
+                </div>
             </div>
-        </div>
     </main>
 
     <script src="script.js"></script>
