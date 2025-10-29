@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         if (!originalFilename) return res.status(400).send('No se pudo leer el archivo');
 
         const ext = originalFilename.split('.').pop().toLowerCase();
-        if (!['doc','docx','ppt','pptx','xls','xlsx'].includes(ext))
+        if (!['doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx'].includes(ext))
             return res.status(400).send('Solo se permiten archivos Word, PowerPoint o Excel');
 
         console.log('Archivo recibido:', originalFilename, 'Extensión:', ext, 'Tamaño del buffer:', buffer.length);
@@ -49,7 +49,7 @@ export default async function handler(req, res) {
         }
 
         // Excel
-        else if (ext === 'xlsx') {
+        if (ext === 'xlsx') {
             pdfBuffer = await new Promise((resolve, reject) =>
                 api.convertDocumentXlsxToPdf(buffer, (err, data) => err ? reject(err) : resolve(Buffer.from(data, 'base64')))
             );
@@ -58,6 +58,7 @@ export default async function handler(req, res) {
                 api.convertDocumentXlsToPdf(buffer, (err, data) => err ? reject(err) : resolve(Buffer.from(data, 'base64')))
             );
         }
+
 
         if (!pdfBuffer || pdfBuffer.length === 0) {
             return res.status(500).send('No se pudo generar el PDF');
