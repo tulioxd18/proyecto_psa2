@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const ext = file.name.split('.').pop().toLowerCase();
-        if (!['docx', 'pptx', 'xlsx'].includes(ext)) {
+        if (!['doc', 'docx', 'pptx', 'ppt', 'xlsx', 'xls'].includes(ext)) {
             alert('Solo se permiten archivos Word, PowerPoint o Excel');
             fileInput.value = '';
             return;

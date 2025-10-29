@@ -1,11 +1,11 @@
 :root {
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
 }
 
 body {
     margin: 0;
     background: #f6f7fb;
-    color: #111
+    color: #111;
 }
 
 main {
@@ -14,33 +14,33 @@ main {
     padding: 20px;
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 6px 24px rgba(15, 23, 42, 0.06)
+    box-shadow: 0 6px 24px rgba(15, 23, 42, 0.06);
 }
 
 h1 {
     margin: 0 0 16px;
-    font-size: 20px
+    font-size: 20px;
 }
 
 .layout {
     display: flex;
-    gap: 18px
+    gap: 18px;
 }
 
 .left-panel {
     width: 340px;
-    flex: 0 0 340px
+    flex: 0 0 340px;
 }
 
 .right-panel {
     flex: 1;
-    min-width: 0
+    min-width: 0;
 }
 
 .controls {
     display: flex;
     flex-direction: column;
-    gap: 12px
+    gap: 12px;
 }
 
 .filelabel {
@@ -48,11 +48,11 @@ h1 {
     padding: 10px 14px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
-    cursor: pointer
+    cursor: pointer;
 }
 
 .filelabel input {
-    display: none
+    display: none;
 }
 
 button {
@@ -61,12 +61,12 @@ button {
     border: 0;
     background: #2563eb;
     color: #fff;
-    cursor: pointer
+    cursor: pointer;
 }
 
 button:disabled {
     opacity: 0.5;
-    cursor: not-allowed
+    cursor: not-allowed;
 }
 
 .info {
@@ -74,17 +74,17 @@ button:disabled {
     padding: 12px;
     border-radius: 8px;
     background: #f8fafc;
-    border: 1px solid #eef2ff
+    border: 1px solid #eef2ff;
 }
 
 .preview-section {
     height: 70vh;
     display: flex;
-    flex-direction: column
+    flex-direction: column;
 }
 
 .preview-section h2 {
-    margin: 0 0 8px
+    margin: 0 0 8px;
 }
 
 .preview {
@@ -93,64 +93,20 @@ button:disabled {
     border: 1px dashed #e5e7eb;
     border-radius: 8px;
     background: #ffffff;
-    overflow: auto
+    overflow: auto;
 }
 
 .preview iframe {
     width: 100%;
-    height: 100%
+    height: 100%;
 }
 
-.donate-section {
-    margin-top: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px
-}
-
-.paypal-btn,
-.paypal-me {
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-    text-decoration: none;
-    color: #fff;
-    background: #0070ba;
-    cursor: pointer;
-    border: none
-}
-
-.or {
-    text-align: center;
-    color: #666
-}
-
-@media(max-width:880px) {
-    .layout {
-        flex-direction: column
-    }
-
-    .left-panel {
-        width: 100%
-    }
-
-    .right-panel {
-        width: 100%
-    }
-
-    .preview-section {
-        height: 50vh
-    }
-}
-
-.donate-section {
+.donate-section,
+.paypal-btn {
     margin-top: 16px;
     display: flex;
     flex-direction: column;
     gap: 8px;
-}
-
-.paypal-btn {
     padding: 10px;
     border-radius: 8px;
     text-align: center;
@@ -161,22 +117,9 @@ button:disabled {
     border: none;
 }
 
-@media(max-width:880px) {
-    .layout {
-        flex-direction: column;
-    }
-
-    .left-panel {
-        width: 100%;
-    }
-
-    .right-panel {
-        width: 100%;
-    }
-
-    .preview-section {
-        height: 50vh;
-    }
+.or {
+    text-align: center;
+    color: #666;
 }
 
 .sidebar-ads {
@@ -186,6 +129,9 @@ button:disabled {
     position: sticky;
     top: 20px;
     height: fit-content;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 @media (max-width: 1100px) {
@@ -198,5 +144,16 @@ button:disabled {
         width: 100%;
         position: static;
         margin-top: 16px;
+    }
+}
+
+@media(max-width:880px) {
+    .preview-section {
+        height: 50vh;
+    }
+
+    .left-panel,
+    .right-panel {
+        width: 100%;
     }
 }
