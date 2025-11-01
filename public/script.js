@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const ext = file.name.split('.').pop().toLowerCase();
-        if (!['doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'xlsb'].includes(ext)) {
-            alert('Solo se permiten archivos Word, PowerPoint o Excel');
+        if (!['doc','docx','ppt','pptx','xls','xlsx','xlsb'].includes(ext)) {
+            alert('Solo se permiten Word, Excel o PowerPoint');
             fileInput.value = '';
             return;
         }
@@ -49,11 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!res.ok) {
                 const txt = await res.text();
-                let msg = txt || 'Error al convertir el archivo. ';
-                if (['ppt','pptx'].includes(ext)) msg += 'Intenta guardar el archivo como .pptx desde PowerPoint si falla.';
-                if (['xls','xlsx','xlsb'].includes(ext)) msg += 'Intenta guardar el archivo como .xlsx desde Excel si falla.';
-                if (['doc','docx'].includes(ext)) msg += 'Intenta guardar el archivo como .docx desde Word si falla.';
-                alert(msg);
+                alert(txt || 'Error al convertir el archivo. Revisa que sea un archivo válido.');
                 messageEl.textContent = '';
                 return;
             }
@@ -66,11 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             messageEl.textContent = 'Archivo listo';
         } catch (e) {
             console.error(e);
-            let msg = 'Error al convertir el archivo. ';
-            if (['ppt','pptx'].includes(ext)) msg += 'Puede ser un PowerPoint inválido o corrupto.';
-            else if (['xls','xlsx','xlsb'].includes(ext)) msg += 'Puede ser un Excel inválido o corrupto.';
-            else if (['doc','docx'].includes(ext)) msg += 'Puede ser un Word inválido o corrupto.';
-            alert(msg);
+            alert('Error al convertir el archivo. Puede ser inválido o contener elementos no soportados.');
             messageEl.textContent = '';
         }
     });

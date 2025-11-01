@@ -16,6 +16,13 @@ export default async function handler(req, res) {
         const originalFilename = req.headers['x-filename'];
         if (!originalFilename) return res.status(400).send('No se pudo leer el archivo');
 
+        const ext = originalFilename.split('.').pop().toLowerCase();
+        if (!['doc','docx','ppt','pptx','xls','xlsx','xlsb'].includes(ext)) {
+            return res.status(400).send('Solo se permiten Word, Excel o PowerPoint');
+        }
+
+        console.log('Archivo recibido:', originalFilename, 'Extensión:', ext, 'Tamaño del buffer:', buffer.length);
+
         const tempPath = path.join('/tmp', originalFilename);
         fs.writeFileSync(tempPath, buffer);
 
@@ -24,7 +31,9 @@ export default async function handler(req, res) {
         const api = new CloudmersiveConvertApiClient.ConvertDocumentApi();
 
         const pdfBuffer = await new Promise((resolve, reject) =>
-            api.convertDocumentAutodetectToPdf(tempPath, (err, data) => err ? reject(err) : resolve(Buffer.from(data, 'base64')))
+            api.convertDocumentAutodetectToPdf(tempPath, (err, data) =>
+                err ? reject(err) : resolve(Buffer.from(data, 'base64'))
+            )
         );
 
         fs.unlinkSync(tempPath);
