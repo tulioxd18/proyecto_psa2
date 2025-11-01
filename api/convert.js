@@ -21,10 +21,11 @@ export default async function handler(req, res) {
             return res.status(400).send('Solo se permiten Word, Excel o PowerPoint');
         }
 
-        console.log('Archivo recibido:', originalFilename, 'Extensión:', ext, 'Tamaño del buffer:', buffer.length);
-
-        const tempPath = path.join('/tmp', originalFilename);
+        const safeFilename = path.basename(originalFilename);
+        const tempPath = path.join('/tmp', safeFilename);
         fs.writeFileSync(tempPath, buffer);
+
+        console.log('Archivo temporal creado:', tempPath, 'Tamaño:', fs.statSync(tempPath).size);
 
         const client = CloudmersiveConvertApiClient.ApiClient.instance;
         client.authentications['Apikey'].apiKey = process.env.CLOUDMERSIVE_API_KEY;
@@ -43,7 +44,7 @@ export default async function handler(req, res) {
         }
 
         res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename="${originalFilename.replace(/\.[^.]+$/, '.pdf')}"`);
+        res.setHeader('Content-Disposition', `attachment; filename="${safeFilename.replace(/\.[^.]+$/, '.pdf')}"`);
         res.send(pdfBuffer);
 
     } catch (e) {
