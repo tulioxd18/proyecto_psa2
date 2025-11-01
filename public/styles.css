@@ -9,7 +9,7 @@ body {
 }
 
 main {
-    max-width: 1100px;
+    max-width: 1400px;
     margin: 28px auto;
     padding: 20px;
     background: #fff;
@@ -28,8 +28,8 @@ h1 {
 }
 
 .left-panel {
-    width: 340px;
-    flex: 0 0 340px;
+    width: 250px;
+    flex: 0 0 250px;
 }
 
 .right-panel {
@@ -89,7 +89,7 @@ button:disabled {
 
 .preview {
     flex: 1;
-    padding: 16px;
+    padding: 12px;
     border: 1px dashed #e5e7eb;
     border-radius: 8px;
     background: #ffffff;
@@ -135,7 +135,7 @@ button:disabled {
     justify-content: center;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1400px) {
     .layout {
         flex-direction: column;
         gap: 18px;
@@ -148,7 +148,7 @@ button:disabled {
     }
 }
 
-@media(max-width:880px) {
+@media (max-width: 880px) {
     .preview-section {
         height: 65vh;
     }
