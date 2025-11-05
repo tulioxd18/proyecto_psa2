@@ -86,4 +86,40 @@ document.addEventListener('DOMContentLoaded', () => {
         descargarBtn.disabled = true;
         pdfUrl = '';
     });
+    // ===== Carrusel de desarrolladores =====
+(() => {
+  const track = document.getElementById("devTrack");
+  if (!track) return;
+
+  const prev = document.querySelector(".carousel-btn.prev");
+  const next = document.querySelector(".carousel-btn.next");
+
+  const gap = 14;
+  const cardWidth = () => {
+    const card = track.querySelector(".dev-card");
+    return card ? card.getBoundingClientRect().width + gap : 220;
+    };
+
+  const scrollByCard = (dir = 1) =>
+    track.scrollBy({ left: dir * cardWidth(), behavior: "smooth" });
+
+  prev?.addEventListener("click", () => scrollByCard(-1));
+  next?.addEventListener("click", () => scrollByCard(1));
+
+  // Auto-avance cada 4s; pausa al interactuar
+  let timer = setInterval(() => scrollByCard(1), 4000);
+  const pause = () => { clearInterval(timer); timer = null; };
+  const resume = () => { if (!timer) timer = setInterval(() => scrollByCard(1), 4000); };
+
+  ["mouseenter","touchstart","pointerdown","focusin"].forEach(ev => track.addEventListener(ev, pause));
+  ["mouseleave","touchend","pointerup","focusout"].forEach(ev => track.addEventListener(ev, resume));
+
+  // Teclado accesible (flechas cuando el track tiene foco)
+  track.setAttribute("tabindex","0");
+  track.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); scrollByCard(1); }
+    if (e.key === "ArrowLeft")  { e.preventDefault(); scrollByCard(-1); }
+  });
+})();
+
 });
