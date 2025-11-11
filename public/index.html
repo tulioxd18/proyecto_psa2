@@ -1,114 +1,109 @@
 <!doctype html>
 <html lang="es">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Convertidor a PDF</title>
-  <link rel="icon" type="image/x-icon" href="codigo.png" />
-  <link rel="stylesheet" href="styles.css" />
-
-  <!-- PayPal Hosted Buttons -->
-  <script src="https://www.paypal.com/sdk/js?client-id=BAAh3W39daP9b5S7kO1DB_njAtMb5vOsSl00wlkqmY2kohn_SVEwj6IAnv85wARkBUlHR_O4oYL4r2-cGc&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Convertidor a PDF</title>
+    <link rel="icon" type="image/x-icon" href="codigo.png" />
+    <link rel="stylesheet" href="diseno.css" />
+    <!-- PayPal Hosted Buttons -->
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=BAAh3W39daP9b5S7kO1DB_njAtMb5vOsSl00wlkqmY2kohn_SVEwj6IAnv85wARkBUlHR_O4oYL4r2-cGc&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
 </head>
+
 <body>
-  <main>
-    <h1>Convertidor de documentos, Excel y PowerPoint a PDF</h1>
+    <main>
+        <h1>Convertidor de documentos, Excel y PowerPoint a PDF</h1>
+        <div class="layout">
+            <!-- Ads -->
+            <div class="sidebar-ads" aria-label="Publicidad">
+                <script>
+                    atOptions = { key: 'e6c619ad979b16fc82d5a77a4edd5895', format: 'iframe', height: 600, width: 160, params: {} };
+                </script>
+                <script src="//www.highperformanceformat.com/e6c619ad979b16fc82d5a77a4edd5895/invoke.js"></script>
+            </div>
 
+            <!-- Controles -->
+            <aside class="left-panel">
+                <div class="controls" role="form" aria-label="Controles de conversión">
+                    <!-- Dropzone / selector -->
+                    <label class="filelabel" id="dropzone">
+                        <span aria-hidden="true">📄⬆️</span>
+                        <span>Seleccionar o arrastrar archivo</span>
+                        <input id="fileInput" name="file" type="file"
+                            accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.odt,.ods,.odp,.rtf,.txt,.csv"
+                            aria-describedby="filename message" />
+                    </label>
 
-    <div class="layout">
-      <!-- Ads -->
-      <div class="sidebar-ads" aria-label="Publicidad">
-        <script>
-          atOptions = { key:'e6c619ad979b16fc82d5a77a4edd5895', format:'iframe', height:600, width:160, params:{} };
-        </script>
-        <script src="//www.highperformanceformat.com/e6c619ad979b16fc82d5a77a4edd5895/invoke.js"></script>
-      </div>
+                    <button id="Descargarbtn" type="button" disabled>Descargar PDF</button>
+                    <button id="Limpiarbtn" type="button" class="btn-secondary">Limpiar</button>
+                </div>
 
-      <!-- Controles -->
-      <aside class="left-panel">
-        <div class="controls" role="form" aria-label="Controles de conversión">
-          <!-- Dropzone / selector -->
-          <label class="filelabel" id="dropzone">
-            <span aria-hidden="true">📄⬆️</span>
-            <span>Seleccionar o arrastrar archivo</span>
-            <input id="fileInput" name="file" type="file"
-                   accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.odt,.ods,.odp,.rtf,.txt,.csv"
-                   aria-describedby="filename message" />
-          </label>
+                <div class="info" aria-live="polite">
+                    <p id="filename">Ningún archivo seleccionado</p>
+                    <p id="message" role="status"></p>
+                </div>
 
-          <button id="Descargarbtn" type="button" disabled>Descargar PDF</button>
-          <button id="Limpiarbtn" type="button" class="btn-secondary">Limpiar</button>
+                <!-- Donaciones -->
+                <div class="donate-section" aria-label="Donaciones">
+                    <div class="price">5,00 $ USD</div>
+                    <p>Si donas nos inspiras para que podamos seguir con el proyecto ❤️</p>
+                    <div id="paypal-container-F362U3ZJV49HC"></div>
+                </div>
+                <script>
+                    paypal.HostedButtons({ hostedButtonId: "F362U3ZJV49HC" })
+                        .render("#paypal-container-F362U3ZJV49HC");
+                </script>
+            </aside>
+
+            <!-- Vista previa + Carrusel (lado derecho) -->
+            <section class="right-panel">
+                <div class="preview-section" aria-label="Vista previa del documento">
+                    <h2>Vista previa</h2>
+                    <iframe id="pdfPreview" class="preview" title="Vista previa de PDF"></iframe>
+                </div>
+
+                <!-- Carrusel de desarrolladores -->
+                <section class="devs" aria-label="Equipo de desarrolladores">
+                    <h3 class="devs-title">Nuestro equipo</h3>
+
+                    <div class="dev-carousel">
+                        <button class="carousel-btn prev" aria-label="Anterior">‹</button>
+
+                        <div class="dev-track" id="devTrack">
+                            <article class="dev-card">
+                                <img src="fotos/luis.jpg" alt="Luis Quesada" loading="lazy">
+                                <h4 class="dev-name">Luis Quesada</h4>
+                                <p class="dev-role">Front-end</p>
+                            </article>
+
+                            <article class="dev-card">
+                                <img src="fotos/marco.jpg" alt="Marco Amador" loading="lazy">
+                                <h4 class="dev-name">Marco Amador</h4>
+                                <p class="dev-role">Backend</p>
+                            </article>
+
+                            <article class="dev-card">
+                                <img src="fotos/carmen.jpg" alt="Carmen Silva" loading="lazy">
+                                <h4 class="dev-name">Carmen Silvia</h4>
+                                <p class="dev-role">la niña bonita</p>
+                            </article>
+
+                        </div>
+
+                        <button class="carousel-btn next" aria-label="Siguiente">›</button>
+                    </div>
+                </section>
+            </section>
+
         </div>
+    </main>
+    <script src="logica.js"></script>
+    <noscript>Activa JavaScript para usar el convertidor.</noscript>
+    <div id="toast" class="toast"></div>
 
-        <div class="info" aria-live="polite">
-          <p id="filename">Ningún archivo seleccionado</p>
-          <p id="message" role="status"></p>
-        </div>
-
-        <!-- Donaciones -->
-        <div class="donate-section" aria-label="Donaciones">
-          <div class="price">5,00 $ USD</div>
-          <p>Si donas nos inspiras para que podamos seguir con el proyecto ❤️</p>
-          <div id="paypal-container-F362U3ZJV49HC"></div>
-        </div>
-        <script>
-          paypal.HostedButtons({ hostedButtonId:"F362U3ZJV49HC" })
-                .render("#paypal-container-F362U3ZJV49HC");
-        </script>
-      </aside>
-
-      <!-- Vista previa + Carrusel (lado derecho) -->
-<section class="right-panel">
-  <div class="preview-section" aria-label="Vista previa del documento">
-    <h2>Vista previa</h2>
-    <iframe id="pdfPreview" class="preview" title="Vista previa de PDF"></iframe>
-  </div>
-
-  <!-- Carrusel de desarrolladores -->
-  <section class="devs" aria-label="Equipo de desarrolladores">
-    <h3 class="devs-title">Nuestro equipo</h3>
-
-    <div class="dev-carousel">
-      <button class="carousel-btn prev" aria-label="Anterior">‹</button>
-
-      <div class="dev-track" id="devTrack">
-        <article class="dev-card">
-          <img src="fotos/luis.jpg" alt="Luis Quesada" loading="lazy">
-          <h4 class="dev-name">Luis Quesada</h4>
-          <p class="dev-role">Front-end</p>
-        </article>
-
-        <article class="dev-card">
-          <img src="fotos/marco.jpg" alt="Marco Amador" loading="lazy">
-          <h4 class="dev-name">Marco Amador</h4>
-          <p class="dev-role">Backend</p>
-        </article>
-
-        <article class="dev-card">
-          <img src="fotos/carmen.jpg" alt="Carmen Silva" loading="lazy">
-          <h4 class="dev-name">Carmen Silvia</h4>
-          <p class="dev-role">la niña bonita</p>
-        </article>
-
-        
-      </div>
-
-      <button class="carousel-btn next" aria-label="Siguiente">›</button>
-    </div>
-  </section>
-</section>
-
-      
-
-   
-
-    </div>
-  </main>
-
-  <script src="script.js"></script>
-  <noscript>Activa JavaScript para usar el convertidor.</noscript>
-<div id="toast" class="toast"></div>
-
-<footer></footer>
+    <footer></footer>
 </body>
-</html>
+
+</html>>
